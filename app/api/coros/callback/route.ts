@@ -4,6 +4,7 @@
 
 import { after, NextRequest, NextResponse } from "next/server";
 import { exchangeCodeForTokens } from "@/lib/coros-oauth";
+import { triggerSync } from "@/lib/trigger-sync";
 import { clearSyncStatus, consumePendingAuth, saveTokens } from "@/lib/token-store";
 
 export const dynamic = "force-dynamic";
@@ -59,14 +60,8 @@ export async function GET(req: NextRequest) {
     // redirect, so the user isn't kept waiting.
     const origin = req.nextUrl.origin;
     after(async () => {
-      try {
-        const res = await fetch(`${origin}/api/cron/sync`, {
-          headers: { authorization: `Bearer ${process.env.CRON_SECRET ?? ""}` },
-        });
-        if (!res.ok) console.error("Sync after connect failed:", res.status, await res.text());
-      } catch (err) {
-        console.error("Sync after connect failed:", err);
-      }
+      const result = await triggerSync(origin);
+      if ("error" in result && result.error) console.error("Sync after connect failed:", result.error);
     });
 
     return NextResponse.redirect(new URL("/", origin));

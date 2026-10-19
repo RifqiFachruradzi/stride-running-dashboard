@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import type { DashboardStatus } from "@/lib/token-store";
+import { SyncNowButton } from "@/components/SyncNowButton";
 
 // The cron runs daily, and the Hobby plan may shift it by up to an hour.
 const STALE_AFTER_MS = 36 * 60 * 60 * 1000;
@@ -19,6 +20,7 @@ function describe(status: DashboardStatus): {
   text: string;
   detail?: string;
   reconnect?: boolean;
+  retry?: boolean;
 } {
   if (status.storage === "not-configured") {
     return {
@@ -39,7 +41,7 @@ function describe(status: DashboardStatus): {
   }
 
   const last = status.lastSync;
-  if (!last) return { tone: "warning", text: "Terhubung · menunggu sync pertama" };
+  if (!last) return { tone: "warning", text: "Terhubung · menunggu sync pertama", retry: true };
 
   const ago = formatDistanceToNow(new Date(last.syncedAt), { addSuffix: true, locale: id });
   if (last.error) {
@@ -48,21 +50,22 @@ function describe(status: DashboardStatus): {
       text: `Sync gagal ${ago}`,
       detail: last.error,
       reconnect: /authoriz|refresh/i.test(last.error),
+      retry: true,
     };
   }
   if (Date.now() - new Date(last.syncedAt).getTime() > STALE_AFTER_MS) {
-    return { tone: "warning", text: `Sync terakhir ${ago}` };
+    return { tone: "warning", text: `Sync terakhir ${ago}`, retry: true };
   }
   const added = last.newActivities > 0 ? ` · +${last.newActivities} lari` : "";
   return { tone: "good", text: `Sync terakhir ${ago}${added}` };
 }
 
 export function SyncStatusBadge({ status }: { status: DashboardStatus }) {
-  const { tone, text, detail, reconnect } = describe(status);
+  const { tone, text, detail, reconnect, retry } = describe(status);
 
   return (
     <div className="flex min-w-0 flex-col items-start gap-1 sm:items-end">
-      <div className="pill min-h-[40px] px-4 font-medium" style={{ background: "var(--surface-1)", color: "var(--text-secondary)" }}>
+      <div className="pill min-h-[40px] flex-wrap whitespace-normal px-4 font-medium" style={{ background: "var(--surface-1)", color: "var(--text-secondary)" }}>
         <span aria-hidden className="dot" style={{ background: TONE_COLOR[tone] }} />
         <span>{text}</span>
         {reconnect && (
@@ -74,6 +77,7 @@ export function SyncStatusBadge({ status }: { status: DashboardStatus }) {
             Hubungkan
           </a>
         )}
+        {retry && !reconnect && <SyncNowButton />}
       </div>
       {detail && (
         <p className="max-w-xs break-words text-xs sm:text-right" style={{ color: "var(--text-secondary)" }}>
