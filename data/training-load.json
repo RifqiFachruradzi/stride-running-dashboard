@@ -355,5 +355,40 @@
     "shortTermLoad": 23,
     "longTermLoad": 38,
     "loadRatio": 0.6
+  },
+  {
+    "date": "2026-10-15",
+    "comment": "Resuming",
+    "shortTermLoad": 20,
+    "longTermLoad": 38,
+    "loadRatio": 0.52
+  },
+  {
+    "date": "2026-10-16",
+    "comment": "Decreasing",
+    "shortTermLoad": 17,
+    "longTermLoad": 38,
+    "loadRatio": 0.44
+  },
+  {
+    "date": "2026-10-17",
+    "comment": "Maintaining",
+    "shortTermLoad": 38,
+    "longTermLoad": 41,
+    "loadRatio": 0.92
+  },
+  {
+    "date": "2026-10-18",
+    "comment": "Maintaining",
+    "shortTermLoad": 40,
+    "longTermLoad": 41,
+    "loadRatio": 0.97
+  },
+  {
+    "date": "2026-10-19",
+    "comment": "Maintaining",
+    "shortTermLoad": 34,
+    "longTermLoad": 40,
+    "loadRatio": 0.85
   }
 ]
