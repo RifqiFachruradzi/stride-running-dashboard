@@ -228,6 +228,41 @@
     "restingHeartRate": null,
     "sleepScore": null,
     "sleepDurationMinutes": null,
+    "stressLevel": 36
+  },
+  {
+    "date": "2026-10-15",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
+    "stressLevel": 37
+  },
+  {
+    "date": "2026-10-16",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
     "stressLevel": 35
+  },
+  {
+    "date": "2026-10-17",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
+    "stressLevel": 60
+  },
+  {
+    "date": "2026-10-18",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
+    "stressLevel": 55
+  },
+  {
+    "date": "2026-10-19",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
+    "stressLevel": 31
   }
 ]
