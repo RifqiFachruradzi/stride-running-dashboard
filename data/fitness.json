@@ -34,5 +34,17 @@
       "halfMarathonSeconds": 7151,
       "marathonSeconds": 7151
     }
+  },
+  {
+    "date": "2026-10-14",
+    "vo2max": 48,
+    "runningLevel": 73,
+    "thresholdPaceSecPerKm": 315,
+    "predictions": {
+      "fiveKmSeconds": 1511,
+      "tenKmSeconds": 3163,
+      "halfMarathonSeconds": 7151,
+      "marathonSeconds": 7151
+    }
   }
 ]
