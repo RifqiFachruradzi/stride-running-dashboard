@@ -13,13 +13,9 @@ import { savePendingAuth } from "@/lib/token-store";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
-  const redirectUri = process.env.COROS_REDIRECT_URI;
-  if (!redirectUri) {
-    return NextResponse.json(
-      { error: "COROS_REDIRECT_URI env var is not set." },
-      { status: 500 }
-    );
-  }
+  // Come back to the domain the user started from, so a renamed or extra
+  // Vercel domain works without touching env vars.
+  const redirectUri = `${req.nextUrl.origin}/api/coros/callback`;
 
   const { codeVerifier, codeChallenge } = generatePkcePair();
   const state = generateState();

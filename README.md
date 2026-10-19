@@ -38,7 +38,6 @@ Salin dari `.env.example` ke **Settings → Environment Variables**:
 
 | Var | Keterangan |
 |---|---|
-| `COROS_REDIRECT_URI` | `https://<domain-vercel-kamu>/api/coros/callback` |
 | `GITHUB_TOKEN` | Fine-grained PAT, scope hanya repo ini, permission "Contents: Read and write". **Beda dari koneksi GitHub di chat Claude** — token ini dipakai backend yang jalan mandiri di Vercel. |
 | `GITHUB_OWNER` | `RifqiFachruradzi` |
 | `GITHUB_REPO` | nama repo ini |
@@ -207,5 +206,6 @@ npm run dev
 ```
 
 Catatan: cron & OAuth callback butuh URL publik untuk redirect COROS —
-untuk tes end-to-end lokal, gunakan tunnel (ngrok/cloudflared) dan set
-`COROS_REDIRECT_URI` ke URL tunnel tersebut.
+untuk tes end-to-end lokal, gunakan tunnel (ngrok/cloudflared) lalu buka
+`/api/coros/authorize` lewat URL tunnel tersebut. Callback otomatis ikut
+domain yang dipakai saat menghubungkan, jadi tidak perlu env var.

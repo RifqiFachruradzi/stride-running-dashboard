@@ -14,8 +14,6 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import { COROS_MCP_URL, refreshTokens } from "./coros-oauth";
 import { loadTokens, saveTokens, type CorosTokenSet } from "./token-store";
 
-const REDIRECT_URI = process.env.COROS_REDIRECT_URI!;
-
 async function getValidAccessToken(): Promise<string> {
   const tokens = await loadTokens();
   if (!tokens) {
@@ -35,7 +33,7 @@ async function getValidAccessToken(): Promise<string> {
     );
   }
 
-  const refreshed = await refreshTokens(tokens.refreshToken, REDIRECT_URI);
+  const refreshed = await refreshTokens(tokens.refreshToken);
   const newTokens: CorosTokenSet = {
     accessToken: refreshed.access_token,
     refreshToken: refreshed.refresh_token ?? tokens.refreshToken,

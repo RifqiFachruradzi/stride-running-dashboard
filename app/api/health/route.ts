@@ -15,7 +15,6 @@ export async function GET() {
     corosTokenExpiresAt: tokens ? new Date(tokens.expiresAt).toISOString() : null,
     github,
     envConfigured: {
-      COROS_REDIRECT_URI: !!process.env.COROS_REDIRECT_URI,
       GITHUB_TOKEN: !!process.env.GITHUB_TOKEN,
       GITHUB_OWNER: !!process.env.GITHUB_OWNER,
       GITHUB_REPO: !!process.env.GITHUB_REPO,

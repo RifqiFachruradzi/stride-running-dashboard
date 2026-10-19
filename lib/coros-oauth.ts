@@ -52,8 +52,10 @@ export async function discoverAuthServerMetadata(): Promise<AuthServerMetadata> 
 export async function ensureClientRegistration(
   redirectUri: string
 ): Promise<CorosClientRegistration> {
+  // COROS only redirects to the callback URL a client was registered with, so
+  // a new domain (e.g. after renaming the Vercel project) needs a new client.
   const existing = await loadClientRegistration();
-  if (existing) return existing;
+  if (existing && existing.redirectUri === redirectUri) return existing;
 
   const metadata = await discoverAuthServerMetadata();
   if (!metadata.registration_endpoint) {
@@ -87,6 +89,7 @@ export async function ensureClientRegistration(
     clientId: body.client_id,
     clientSecret: body.client_secret,
     registeredAt: Date.now(),
+    redirectUri,
   };
   await saveClientRegistration(registration);
   return registration;
@@ -161,9 +164,14 @@ export async function exchangeCodeForTokens(params: {
   };
 }
 
-export async function refreshTokens(refreshToken: string, redirectUri: string) {
+export async function refreshTokens(refreshToken: string) {
   const metadata = await discoverAuthServerMetadata();
-  const client = await ensureClientRegistration(redirectUri);
+  // The refresh token belongs to the client that obtained it, so never
+  // register a new one here.
+  const client = await loadClientRegistration();
+  if (!client) {
+    throw new Error("No COROS client registration stored — re-authorize via /api/coros/authorize.");
+  }
 
   const body = new URLSearchParams({
     grant_type: "refresh_token",

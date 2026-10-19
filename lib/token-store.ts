@@ -37,6 +37,8 @@ export interface CorosClientRegistration {
   clientId: string;
   clientSecret?: string;
   registeredAt: number;
+  /** The callback URL this client was registered with. Missing on old records. */
+  redirectUri?: string;
 }
 
 export interface PendingAuth {
