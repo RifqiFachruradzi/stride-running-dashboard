@@ -90,6 +90,10 @@ export async function saveSyncStatus(result: SyncResult): Promise<void> {
   await kv.set(SYNC_STATUS_KEY, result);
 }
 
+export async function clearSyncStatus(): Promise<void> {
+  await kv.del(SYNC_STATUS_KEY);
+}
+
 export async function loadSyncStatus(): Promise<SyncResult | null> {
   return (await kv.get<SyncResult>(SYNC_STATUS_KEY)) ?? null;
 }

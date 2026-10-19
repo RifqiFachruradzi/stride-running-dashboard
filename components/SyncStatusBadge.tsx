@@ -39,7 +39,7 @@ function describe(status: DashboardStatus): {
   }
 
   const last = status.lastSync;
-  if (!last) return { tone: "warning", text: "Belum pernah sync" };
+  if (!last) return { tone: "warning", text: "Terhubung · menunggu sync pertama" };
 
   const ago = formatDistanceToNow(new Date(last.syncedAt), { addSuffix: true, locale: id });
   if (last.error) {

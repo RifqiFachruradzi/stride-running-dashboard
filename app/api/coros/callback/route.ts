@@ -1,11 +1,14 @@
 // Step 2 of the OAuth handshake: COROS redirects back here with ?code&state.
-// Exchanges the code for tokens and stores them in KV for the cron job.
+// Exchanges the code for tokens, stores them in KV for the cron job, then
+// starts a sync right away and sends the user back to the dashboard.
 
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { exchangeCodeForTokens } from "@/lib/coros-oauth";
-import { consumePendingAuth, saveTokens } from "@/lib/token-store";
+import { clearSyncStatus, consumePendingAuth, saveTokens } from "@/lib/token-store";
 
 export const dynamic = "force-dynamic";
+// Room for the sync that runs after the response.
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
@@ -48,11 +51,25 @@ export async function GET(req: NextRequest) {
       scope: tokens.scope,
     });
 
-    return NextResponse.json({
-      ok: true,
-      message:
-        "COROS account connected. The dashboard will start syncing on the next cron run (or trigger /api/cron/sync manually).",
+    // The stored status still holds the failure that asked for this
+    // reconnect; drop it so the badge stops offering "Hubungkan".
+    await clearSyncStatus();
+
+    // Sync now instead of waiting for tomorrow's cron. It runs after the
+    // redirect, so the user isn't kept waiting.
+    const origin = req.nextUrl.origin;
+    after(async () => {
+      try {
+        const res = await fetch(`${origin}/api/cron/sync`, {
+          headers: { authorization: `Bearer ${process.env.CRON_SECRET ?? ""}` },
+        });
+        if (!res.ok) console.error("Sync after connect failed:", res.status, await res.text());
+      } catch (err) {
+        console.error("Sync after connect failed:", err);
+      }
     });
+
+    return NextResponse.redirect(new URL("/", origin));
   } catch (err: any) {
     return NextResponse.json(
       { error: "Token exchange failed", detail: err.message },
