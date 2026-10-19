@@ -31,64 +31,70 @@ export interface FileToCommit {
 }
 
 /**
- * Creates or updates one or more files in a single commit-per-file (the
- * GitHub Contents API doesn't support multi-file atomic commits without the
- * lower-level Git Data API — fine for our low-frequency data updates).
- * Returns false (no-op) if none of the files actually changed content.
+ * Writes the files that changed in a single commit (so one sync triggers one
+ * redeploy, not one per file). Returns false (no-op) if nothing changed.
  */
 export async function commitDataFiles(
   files: FileToCommit[],
   message: string
 ): Promise<boolean> {
   const octokit = client();
-  let committedAny = false;
+  const target = `${owner}/${repo}@${branch}`;
+  const fail = (step: string, err: any) =>
+    new Error(
+      `${step} ${target} gagal (${err.status ?? "?"}): ${err.message}. ` +
+        "Cek GITHUB_OWNER/GITHUB_REPO/GITHUB_BRANCH dan akses GITHUB_TOKEN ke repo ini (Contents: Read and write)."
+    );
 
-  for (const file of files) {
-    const encoded = Buffer.from(file.content, "utf-8").toString("base64");
-
-    let existingSha: string | undefined;
-    let existingContent: string | undefined;
-    try {
-      const { data } = await octokit.repos.getContent({
-        owner,
-        repo,
-        path: file.path,
-        ref: branch,
-      });
-      if (!Array.isArray(data) && data.type === "file") {
-        existingSha = data.sha;
-        existingContent = data.content?.replace(/\n/g, "");
-      }
-    } catch (err: any) {
-      if (err.status !== 404) throw err;
-      // File doesn't exist yet — will be created.
-    }
-
-    if (existingContent === encoded) {
-      continue; // no change, skip the commit entirely
-    }
-
-    try {
-      await octokit.repos.createOrUpdateFileContents({
-        owner,
-        repo,
-        path: file.path,
-        message,
-        content: encoded,
-        sha: existingSha,
-        branch,
-      });
-    } catch (err: any) {
-      // GitHub answers 404 (not 403) when the token can't see a private repo.
-      throw new Error(
-        `Commit ${file.path} ke ${owner}/${repo}@${branch} gagal (${err.status}): ${err.message}. ` +
-          "Cek GITHUB_OWNER/GITHUB_REPO/GITHUB_BRANCH dan akses GITHUB_TOKEN ke repo ini (Contents: Read and write)."
-      );
-    }
-    committedAny = true;
+  let baseSha: string;
+  let baseTree: string;
+  try {
+    const { data: ref } = await octokit.git.getRef({ owner, repo, ref: `heads/${branch}` });
+    baseSha = ref.object.sha;
+    const { data: commit } = await octokit.git.getCommit({ owner, repo, commit_sha: baseSha });
+    baseTree = commit.tree.sha;
+  } catch (err: any) {
+    // GitHub answers 404 (not 403) when the token can't see a private repo.
+    throw fail("Membaca", err);
   }
 
-  return committedAny;
+  const changed: FileToCommit[] = [];
+  for (const file of files) {
+    const encoded = Buffer.from(file.content, "utf-8").toString("base64");
+    try {
+      const { data } = await octokit.repos.getContent({ owner, repo, path: file.path, ref: baseSha });
+      if (!Array.isArray(data) && data.type === "file" && data.content?.replace(/\n/g, "") === encoded) {
+        continue; // no change
+      }
+    } catch (err: any) {
+      if (err.status !== 404) throw fail(`Membaca ${file.path} di`, err);
+      // File doesn't exist yet — will be created.
+    }
+    changed.push(file);
+  }
+  if (changed.length === 0) return false;
+
+  try {
+    const { data: tree } = await octokit.git.createTree({
+      owner,
+      repo,
+      base_tree: baseTree,
+      tree: changed.map((f) => ({ path: f.path, mode: "100644" as const, type: "blob" as const, content: f.content })),
+    });
+    const { data: commit } = await octokit.git.createCommit({
+      owner,
+      repo,
+      message,
+      tree: tree.sha,
+      parents: [baseSha],
+    });
+    // Not forced: if the branch moved meanwhile this fails instead of
+    // dropping someone else's commit.
+    await octokit.git.updateRef({ owner, repo, ref: `heads/${branch}`, sha: commit.sha });
+  } catch (err: any) {
+    throw fail("Commit ke", err);
+  }
+  return true;
 }
 
 /** For /api/health: can the token see the repo and branch, and may it push? */

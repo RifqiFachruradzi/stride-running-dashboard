@@ -23,7 +23,7 @@ import {
   mergeBodySnapshots,
 } from "@/lib/data-store";
 import { commitDataFiles } from "@/lib/github";
-import { loadActiveProgram, saveSyncStatus } from "@/lib/token-store";
+import { loadActiveProgram, saveDataFiles, saveSyncStatus } from "@/lib/token-store";
 import type { SyncResult } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -169,36 +169,42 @@ export async function GET(req: NextRequest) {
         (m) => m.addedCount > 0 || m.changedCount > 0
       );
 
-    if (hasChanges) {
-      const committed = await commitDataFiles(
-        [
-          { path: "data/runs.json", content: JSON.stringify(runsMerge.merged, null, 2) },
-          {
-            path: "data/fitness.json",
-            content: JSON.stringify(fitnessMerge.merged, null, 2),
-          },
-          {
-            path: "data/training-load.json",
-            content: JSON.stringify(loadMerge.merged, null, 2),
-          },
-          {
-            path: "data/body-condition.json",
-            content: JSON.stringify(bodyMerge.merged, null, 2),
-          },
-        ],
-        `sync: +${runsMerge.addedCount} run(s), +${result.newSnapshots} snapshot(s) (${today})`
-      );
-      result.committed = committed;
-    }
-
     // The coaching routine can't reach Redis, so it reads the accepted program
-    // from the repo. commitDataFiles skips the commit when nothing changed.
+    // from the repo; it rides along in the same commit (commitDataFiles skips
+    // files that didn't change).
     const activeProgram = await loadActiveProgram();
-    const snapshotCommitted = await commitDataFiles(
-      [{ path: "data/active-program.json", content: JSON.stringify(activeProgram, null, 2) }],
-      `coach: snapshot program aktif (${today})`
+    const synced: Record<string, unknown> = {
+      "runs.json": runsMerge.merged,
+      "fitness.json": fitnessMerge.merged,
+      "training-load.json": loadMerge.merged,
+      "body-condition.json": bodyMerge.merged,
+    };
+    const files = [
+      ...(hasChanges
+        ? Object.entries(synced).map(([name, value]) => ({
+            path: `data/${name}`,
+            content: JSON.stringify(value, null, 2),
+          }))
+        : []),
+      { path: "data/active-program.json", content: JSON.stringify(activeProgram, null, 2) },
+    ];
+    result.committed = await commitDataFiles(
+      files,
+      hasChanges
+        ? `sync: +${runsMerge.addedCount} run(s), +${result.newSnapshots} snapshot(s) (${today})`
+        : `coach: snapshot program aktif (${today})`
     );
-    result.committed = result.committed || snapshotCommitted;
+
+    // Show the new data right away instead of after the redeploy. Only once
+    // committed: the next sync merges on top of this copy, so it must match
+    // the repo.
+    if (hasChanges) {
+      try {
+        await saveDataFiles(synced);
+      } catch (err) {
+        console.error("Saving synced data to Redis failed:", err);
+      }
+    }
 
     await recordSyncStatus(result);
     return NextResponse.json(result);

@@ -20,7 +20,6 @@ function describe(status: DashboardStatus): {
   text: string;
   detail?: string;
   reconnect?: boolean;
-  retry?: boolean;
 } {
   if (status.storage === "not-configured") {
     return {
@@ -41,7 +40,7 @@ function describe(status: DashboardStatus): {
   }
 
   const last = status.lastSync;
-  if (!last) return { tone: "warning", text: "Terhubung · menunggu sync pertama", retry: true };
+  if (!last) return { tone: "warning", text: "Terhubung · menunggu sync pertama" };
 
   const ago = formatDistanceToNow(new Date(last.syncedAt), { addSuffix: true, locale: id });
   if (last.error) {
@@ -50,34 +49,38 @@ function describe(status: DashboardStatus): {
       text: `Sync gagal ${ago}`,
       detail: last.error,
       reconnect: /authoriz|refresh/i.test(last.error),
-      retry: true,
     };
   }
   if (Date.now() - new Date(last.syncedAt).getTime() > STALE_AFTER_MS) {
-    return { tone: "warning", text: `Sync terakhir ${ago}`, retry: true };
+    return { tone: "warning", text: `Sync terakhir ${ago}` };
   }
   const added = last.newActivities > 0 ? ` · +${last.newActivities} lari` : "";
   return { tone: "good", text: `Sync terakhir ${ago}${added}` };
 }
 
 export function SyncStatusBadge({ status }: { status: DashboardStatus }) {
-  const { tone, text, detail, reconnect, retry } = describe(status);
+  const { tone, text, detail, reconnect } = describe(status);
 
   return (
     <div className="flex min-w-0 flex-col items-start gap-1 sm:items-end">
-      <div className="pill min-h-[40px] flex-wrap whitespace-normal px-4 font-medium" style={{ background: "var(--surface-1)", color: "var(--text-secondary)" }}>
-        <span aria-hidden className="dot" style={{ background: TONE_COLOR[tone] }} />
-        <span>{text}</span>
-        {reconnect && (
-          <a
-            href="/api/coros/authorize"
-            className="link font-semibold underline underline-offset-2"
-            style={{ color: "var(--text-primary)" }}
-          >
-            Hubungkan
-          </a>
-        )}
-        {retry && !reconnect && <SyncNowButton />}
+      <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+        <div
+          className="pill min-h-[40px] flex-wrap whitespace-normal px-4 font-medium"
+          style={{ background: "var(--surface-1)", color: "var(--text-secondary)" }}
+        >
+          <span aria-hidden className="dot" style={{ background: TONE_COLOR[tone] }} />
+          <span>{text}</span>
+          {reconnect && (
+            <a
+              href="/api/coros/authorize"
+              className="link font-semibold underline underline-offset-2"
+              style={{ color: "var(--text-primary)" }}
+            >
+              Hubungkan
+            </a>
+          )}
+        </div>
+        {status.storage === "ok" && status.corosConnected && !reconnect && <SyncNowButton />}
       </div>
       {detail && (
         <p className="max-w-xs break-words text-xs sm:text-right" style={{ color: "var(--text-secondary)" }}>

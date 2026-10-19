@@ -1,14 +1,15 @@
 "use server";
 
-// "Sync sekarang" from the status badge. A POST to a dashboard page, so
+// The "Sync" button in the dashboard header. A POST to a dashboard page, so
 // proxy.ts's login check guards it like the page itself.
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { triggerSync } from "@/lib/trigger-sync";
-import type { ActionResult } from "./actions";
 
-export async function syncNow(): Promise<ActionResult> {
+export type SyncNowResult = { ok: true; message: string } | { ok: false; error: string };
+
+export async function syncNow(): Promise<SyncNowResult> {
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host");
   const proto = h.get("x-forwarded-proto") ?? "https";
@@ -16,5 +17,11 @@ export async function syncNow(): Promise<ActionResult> {
 
   const result = await triggerSync(`${proto}://${host}`);
   revalidatePath("/", "layout");
-  return "error" in result && result.error ? { ok: false, error: result.error } : { ok: true };
+  if ("error" in result && result.error) return { ok: false, error: result.error };
+
+  const added = "newActivities" in result ? result.newActivities : 0;
+  return {
+    ok: true,
+    message: added > 0 ? `+${added} lari baru masuk` : "Sudah paling baru",
+  };
 }

@@ -65,6 +65,14 @@ const PATHS = {
     </>
   ),
   plus: <path d="M12 5v14M5 12h14" />,
+  sync: (
+    <>
+      <path d="M20 11a8 8 0 0 0-14.3-4.9L4 8" />
+      <path d="M4 3v5h5" />
+      <path d="M4 13a8 8 0 0 0 14.3 4.9L20 16" />
+      <path d="M20 21v-5h-5" />
+    </>
+  ),
   trash: (
     <>
       <path d="M4 7h16" />

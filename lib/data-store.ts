@@ -1,9 +1,12 @@
-// Reads the dashboard's committed JSON data (as of the last deploy) and
-// merges in freshly-fetched COROS data, deduping so the cron job can run
-// often without producing duplicate entries or needless commits.
+// Reads the dashboard's committed JSON data and merges in freshly-fetched
+// COROS data, deduping so syncs can run often without producing duplicate
+// entries or needless commits. Files a sync just wrote are read from Redis
+// until the deployment carries them (see saveDataFiles).
 
 import { readFile } from "fs/promises";
 import path from "path";
+import { cache } from "react";
+import { isStorageConfigured, loadDataFile } from "./token-store";
 import type {
   RunActivity,
   FitnessSnapshot,
@@ -37,13 +40,31 @@ export async function readRecommendation(): Promise<RecommendationFile> {
   }
 }
 
-async function readJson<T>(filename: string, fallback: T): Promise<T> {
-  try {
-    const raw = await readFile(path.join(DATA_DIR, filename), "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
+// The synced files; others (recommendation, active program) only change
+// through their own commits.
+export const SYNCED_FILES = ["runs.json", "fitness.json", "training-load.json", "body-condition.json"];
+
+// Several components read the same file per request; fetch it once.
+const loadFile = cache(async (filename: string): Promise<unknown> => {
+  if (isStorageConfigured() && SYNCED_FILES.includes(filename)) {
+    try {
+      const fresh = await loadDataFile(filename);
+      if (fresh) return fresh;
+    } catch (err) {
+      console.error(`Reading ${filename} from Redis failed, using the deployed copy:`, err);
+    }
   }
+  try {
+    return JSON.parse(await readFile(path.join(DATA_DIR, filename), "utf-8"));
+  } catch {
+    return undefined;
+  }
+});
+
+async function readJson<T>(filename: string, fallback: T): Promise<T> {
+  const value = await loadFile(filename);
+  // A copy, since callers may sort the arrays in place.
+  return value === undefined ? fallback : (structuredClone(value) as T);
 }
 
 export async function readRuns(): Promise<RunActivity[]> {

@@ -24,6 +24,10 @@ const CLIENT_KEY = "coros:oauth:client";
 const PENDING_PREFIX = "coros:oauth:pending:"; // + state
 const SYNC_STATUS_KEY = "coros:sync:last";
 const ACTIVE_PROGRAM_KEY = "coach:program:active";
+const DATA_FILE_PREFIX = "data:file:";
+// Long enough for the sync commit to be deployed; after that the files in
+// the deployment are current again and win.
+const DATA_FILE_TTL_SECONDS = 6 * 60 * 60;
 
 export interface CorosTokenSet {
   accessToken: string;
@@ -108,6 +112,22 @@ export async function loadActiveProgram(): Promise<ActiveProgram | null> {
 
 export async function clearActiveProgram(): Promise<void> {
   await kv.del(ACTIVE_PROGRAM_KEY);
+}
+
+/**
+ * Fresh copies of the data files a sync just committed, so the dashboard
+ * shows them right away instead of after Vercel redeploys the commit.
+ */
+export async function saveDataFiles(files: Record<string, unknown>): Promise<void> {
+  await Promise.all(
+    Object.entries(files).map(([name, value]) =>
+      kv.set(DATA_FILE_PREFIX + name, value, { ex: DATA_FILE_TTL_SECONDS })
+    )
+  );
+}
+
+export async function loadDataFile<T>(name: string): Promise<T | null> {
+  return (await kv.get<T>(DATA_FILE_PREFIX + name)) ?? null;
 }
 
 export function isStorageConfigured(): boolean {
