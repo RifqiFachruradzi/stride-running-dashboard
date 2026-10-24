@@ -1,180 +1,88 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-23T16:37:17.366Z",
+  "generatedAt": "2026-10-24T16:37:26.396Z",
   "readiness": "siap_intensitas",
-  "summary": "Load ratio kamu stabil di 0,71 (performance zone) dan long run 10 km pada 17 Okt menunjukkan kemajuan besar — itu lari terjauh kamu sejauh ini dengan pace rata-rata 7:51/km. Besok adalah hari ke-13 program 6K Goals Routine dan tidak ada sesi terjadwal, jadi ini hari istirahat.",
+  "summary": "Load ratio kamu stabil di 0,60 hari ini — zona \"Performance\" yang bagus. Lari terakhir tanggal 21 Oktober (4,37 km @ 7:38/km) menunjukkan pace aktual kamu di kisaran 7:30–8:30/km, dan kamu sudah berhasil menyelesaikan 10 km pada 17 Oktober. Besok adalah day 14 program 6K Goals Routine: long run 5,5 km.",
   "tomorrow": {
-    "title": "Istirahat",
-    "distanceKm": null,
-    "targetPace": null,
-    "notes": "Hari ke-13 program 6K Goals Routine — tidak ada sesi. Gunakan untuk pemulihan aktif (jalan kaki, stretching, foam rolling). Sesi berikutnya adalah long run 5,5 km di hari ke-14 (25 Okt)."
+    "title": "Long run",
+    "distanceKm": 5.5,
+    "targetPace": "8:30",
+    "notes": "Sesi program 6K Goals Routine day 14. Jaga pace santai ~8:30/km, fokus lari tanpa berhenti. Kamu sudah pernah lari 10 km, jadi 5,5 km seharusnya nyaman — nikmati saja."
   },
   "warnings": [
-    "Data resting HR dan sleep score hampir seluruhnya kosong (hanya 3 dari 36 hari terisi). Tidak bisa menilai pemulihan secara akurat — pastikan jam tangan dipakai saat tidur agar data lebih lengkap.",
-    "Prediksi COROS untuk 5K (25:09, ~5:02/km) dan 10K (52:39, ~5:16/km) jauh lebih cepat dari pace aktual kamu (rata-rata easy run ~8:15/km, lari cepat ~7:07–7:31/km). Target pace di program tetap berdasarkan pace aktual, bukan prediksi COROS.",
-    "Long run 10,03 km pada 17 Okt adalah lompatan besar dari lari terjauh sebelumnya (6,01 km). Tubuh mungkin masih beradaptasi — perhatikan nyeri atau kelelahan berlebih."
+    "Data resting HR dan sleep score hampir seluruhnya kosong (hanya 3 hari dari 5 minggu terakhir yang tercatat). Tidak bisa menilai tren pemulihan secara akurat. Pastikan jam tangan dipakai saat tidur agar data lebih lengkap.",
+    "Prediksi COROS untuk 5K adalah ~5:02/km dan 10K ~5:16/km, tapi pace aktual kamu berkisar 7:07–9:15/km. Target pace di program dan rekomendasi menggunakan pace aktual kamu, bukan prediksi COROS.",
+    "Stress level sempat tinggi di 3 Oktober (72) dan 17 Oktober (60). Pantau kondisi tubuh dan jangan ragu istirahat ekstra kalau merasa lelah."
   ],
   "programs": [
     {
-      "id": "6k-goals-routine-20261023",
-      "title": "6K Goals Routine (Lanjutan)",
-      "goal": "Program ini sedang aktif (mulai 12 Okt, berakhir 8 Nov). Lanjutkan program yang sudah berjalan — tidak perlu mengambil program baru sampai selesai.",
-      "durationWeeks": 4,
-      "sessions": [
-        {
-          "day": 2,
-          "title": "Easy run",
-          "distanceKm": 3,
-          "targetPace": "8:15",
-          "notes": "Santai, masih bisa mengobrol."
-        },
-        {
-          "day": 4,
-          "title": "Easy run",
-          "distanceKm": 3,
-          "targetPace": "8:15",
-          "notes": ""
-        },
-        {
-          "day": 7,
-          "title": "Long run",
-          "distanceKm": 5,
-          "targetPace": "8:30",
-          "notes": "Pace boleh lebih lambat, yang penting tidak berhenti."
-        },
-        {
-          "day": 9,
-          "title": "Easy run",
-          "distanceKm": 3.5,
-          "targetPace": "8:15",
-          "notes": ""
-        },
-        {
-          "day": 11,
-          "title": "Easy run + 4× strides",
-          "distanceKm": 3.5,
-          "targetPace": "8:15",
-          "notes": "Strides 20 detik cepat, jalan 1 menit."
-        },
-        {
-          "day": 14,
-          "title": "Long run",
-          "distanceKm": 5.5,
-          "targetPace": "8:30",
-          "notes": ""
-        },
-        {
-          "day": 16,
-          "title": "Easy run",
-          "distanceKm": 3.5,
-          "targetPace": "8:15",
-          "notes": ""
-        },
-        {
-          "day": 18,
-          "title": "Easy run + 6× 1 menit cepat",
-          "distanceKm": 4,
-          "targetPace": "8:00",
-          "notes": "Bagian cepat di ±7:00/km, jog 2 menit di antaranya."
-        },
-        {
-          "day": 21,
-          "title": "Long run",
-          "distanceKm": 6,
-          "targetPace": "8:30",
-          "notes": "Latihan pertama di jarak target."
-        },
-        {
-          "day": 23,
-          "title": "Easy run",
-          "distanceKm": 3,
-          "targetPace": "8:15",
-          "notes": "Minggu pemulihan sebelum goal run."
-        },
-        {
-          "day": 25,
-          "title": "Easy run + 4× strides",
-          "distanceKm": 3,
-          "targetPace": "8:15",
-          "notes": ""
-        },
-        {
-          "day": 28,
-          "title": "6K goal run",
-          "distanceKm": 6,
-          "targetPace": "8:00",
-          "notes": "Mulai santai, percepat sedikit di 2 km terakhir kalau terasa kuat."
-        }
-      ]
-    },
-    {
-      "id": "8k-build-up-20261023",
-      "title": "8K Build-Up",
-      "goal": "Membangun kemampuan lari 8 km tanpa berhenti dalam 6 minggu. Cocok dimulai setelah 6K Goals Routine selesai (mulai ~9 Nov). Volume naik bertahap dari basis ~18 km/minggu.",
+      "id": "6k-maintain-20261024",
+      "title": "6K Maintain & Strengthen",
+      "goal": "Memperkuat fondasi aerobik di jarak 4–6 km, meningkatkan konsistensi lari 3× seminggu, dan menurunkan pace easy run secara bertahap. Cocok dimulai setelah program 6K Goals Routine selesai (9 November).",
       "durationWeeks": 6,
       "sessions": [
         {
           "day": 2,
           "title": "Easy run",
           "distanceKm": 4,
-          "targetPace": "8:00",
+          "targetPace": "8:15",
           "notes": "Pemanasan 5 menit jalan cepat."
         },
         {
           "day": 4,
-          "title": "Easy run",
+          "title": "Easy run + 4× strides",
           "distanceKm": 4,
-          "targetPace": "8:00",
-          "notes": ""
+          "targetPace": "8:15",
+          "notes": "Strides 20 detik cepat (~7:00/km), jalan 1 menit di antaranya."
         },
         {
           "day": 7,
           "title": "Long run",
           "distanceKm": 6,
-          "targetPace": "8:15",
-          "notes": "Pace santai, fokus durasi."
+          "targetPace": "8:30",
+          "notes": "Pace santai, fokus durasi bukan kecepatan."
         },
         {
           "day": 9,
           "title": "Easy run",
           "distanceKm": 4,
-          "targetPace": "8:00",
+          "targetPace": "8:10",
           "notes": ""
         },
         {
           "day": 11,
-          "title": "Easy run + 4× strides",
+          "title": "Easy run + 6× 1 menit cepat",
           "distanceKm": 4.5,
-          "targetPace": "8:00",
-          "notes": "Strides 20 detik, jog 1 menit."
+          "targetPace": "8:10",
+          "notes": "Bagian cepat ~7:00/km, jog 2 menit di antaranya."
         },
         {
           "day": 14,
           "title": "Long run",
           "distanceKm": 6.5,
-          "targetPace": "8:15",
+          "targetPace": "8:30",
           "notes": ""
         },
         {
           "day": 16,
           "title": "Easy run",
-          "distanceKm": 4.5,
+          "distanceKm": 4,
           "targetPace": "8:00",
           "notes": ""
         },
         {
           "day": 18,
           "title": "Tempo run",
-          "distanceKm": 5,
+          "distanceKm": 4.5,
           "targetPace": "7:30",
-          "notes": "1 km pemanasan, 3 km di 7:00–7:15/km, 1 km pendinginan."
+          "notes": "1 km pemanasan, 2,5 km @ 7:30/km, 1 km pendinginan."
         },
         {
           "day": 21,
           "title": "Long run",
           "distanceKm": 7,
-          "targetPace": "8:15",
-          "notes": "Jarak terpanjang sejauh ini — jaga pace santai."
+          "targetPace": "8:30",
+          "notes": "Jarak terpanjang minggu ini. Boleh lebih lambat kalau perlu."
         },
         {
           "day": 23,
@@ -185,17 +93,17 @@
         },
         {
           "day": 25,
-          "title": "Easy run",
+          "title": "Easy run + 4× strides",
           "distanceKm": 3.5,
           "targetPace": "8:15",
           "notes": ""
         },
         {
           "day": 28,
-          "title": "Easy long run",
-          "distanceKm": 5,
-          "targetPace": "8:30",
-          "notes": "Pemulihan aktif."
+          "title": "Easy run",
+          "distanceKm": 4,
+          "targetPace": "8:15",
+          "notes": "Minggu pemulihan, jaga ringan."
         },
         {
           "day": 30,
@@ -206,86 +114,262 @@
         },
         {
           "day": 32,
-          "title": "Easy run + 6× 1 menit cepat",
+          "title": "Tempo run",
           "distanceKm": 5,
-          "targetPace": "7:45",
-          "notes": "Bagian cepat ~7:00/km, jog 2 menit."
+          "targetPace": "7:30",
+          "notes": "1 km pemanasan, 3 km @ 7:30/km, 1 km pendinginan."
         },
         {
           "day": 35,
           "title": "Long run",
-          "distanceKm": 7.5,
-          "targetPace": "8:15",
+          "distanceKm": 7,
+          "targetPace": "8:20",
           "notes": ""
         },
         {
           "day": 37,
           "title": "Easy run",
-          "distanceKm": 4,
+          "distanceKm": 4.5,
           "targetPace": "8:00",
           "notes": ""
         },
         {
           "day": 39,
-          "title": "Easy run + strides",
-          "distanceKm": 3.5,
+          "title": "Easy run + 6× 1 menit cepat",
+          "distanceKm": 5,
           "targetPace": "8:00",
-          "notes": "4× strides 20 detik."
+          "notes": "Bagian cepat ~6:50/km."
         },
         {
           "day": 42,
-          "title": "8K goal run",
-          "distanceKm": 8,
+          "title": "6K test run",
+          "distanceKm": 6,
           "targetPace": "7:45",
-          "notes": "Mulai di 8:00/km, percepat bertahap di 3 km terakhir kalau nyaman."
+          "notes": "Coba lari 6 km di pace lebih cepat dari awal program. Lihat kemajuanmu!"
         }
       ]
     },
     {
-      "id": "easy-base-maintenance-20261023",
-      "title": "Easy Base Maintenance",
-      "goal": "Menjaga kebugaran dasar dengan volume ringan 3× per minggu selama 4 minggu. Cocok dimulai setelah 6K Goals Routine selesai (~9 Nov) atau sebagai alternatif ringan kalau butuh istirahat lebih.",
-      "durationWeeks": 4,
+      "id": "10k-routine-20261024",
+      "title": "10K Routine",
+      "goal": "Membangun kemampuan lari 10 km dengan nyaman dan konsisten. Kamu sudah pernah lari 10 km (17 Okt), program ini akan membuat jarak itu terasa lebih mudah. Cocok dimulai setelah program 6K Goals Routine selesai (9 November).",
+      "durationWeeks": 8,
       "sessions": [
         {
           "day": 2,
           "title": "Easy run",
-          "distanceKm": 3.5,
-          "targetPace": "8:15",
-          "notes": "Santai, nikmati lari."
-        },
-        {
-          "day": 5,
-          "title": "Easy run",
-          "distanceKm": 3.5,
+          "distanceKm": 4,
           "targetPace": "8:15",
           "notes": ""
         },
         {
+          "day": 4,
+          "title": "Easy run + 4× strides",
+          "distanceKm": 4,
+          "targetPace": "8:15",
+          "notes": "Strides 20 detik, jalan 1 menit."
+        },
+        {
           "day": 7,
-          "title": "Easy long run",
-          "distanceKm": 5,
+          "title": "Long run",
+          "distanceKm": 6,
           "targetPace": "8:30",
           "notes": ""
         },
         {
           "day": 9,
           "title": "Easy run",
-          "distanceKm": 3.5,
+          "distanceKm": 4.5,
+          "targetPace": "8:10",
+          "notes": ""
+        },
+        {
+          "day": 11,
+          "title": "Easy run + 6× 1 menit cepat",
+          "distanceKm": 5,
+          "targetPace": "8:10",
+          "notes": "Bagian cepat ~7:00/km, jog 2 menit."
+        },
+        {
+          "day": 14,
+          "title": "Long run",
+          "distanceKm": 7,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 16,
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "8:00",
+          "notes": ""
+        },
+        {
+          "day": 18,
+          "title": "Tempo run",
+          "distanceKm": 5,
+          "targetPace": "7:30",
+          "notes": "1 km pemanasan, 3 km @ 7:30/km, 1 km pendinginan."
+        },
+        {
+          "day": 21,
+          "title": "Long run",
+          "distanceKm": 8,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 23,
+          "title": "Easy run",
+          "distanceKm": 4,
+          "targetPace": "8:15",
+          "notes": "Minggu pemulihan."
+        },
+        {
+          "day": 25,
+          "title": "Easy run + 4× strides",
+          "distanceKm": 4,
           "targetPace": "8:15",
           "notes": ""
         },
         {
-          "day": 12,
+          "day": 28,
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "8:15",
+          "notes": "Minggu pemulihan, volume rendah."
+        },
+        {
+          "day": 30,
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "8:00",
+          "notes": ""
+        },
+        {
+          "day": 32,
+          "title": "Tempo run",
+          "distanceKm": 5.5,
+          "targetPace": "7:25",
+          "notes": "1 km pemanasan, 3,5 km @ 7:25/km, 1 km pendinginan."
+        },
+        {
+          "day": 35,
+          "title": "Long run",
+          "distanceKm": 9,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 37,
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "8:00",
+          "notes": ""
+        },
+        {
+          "day": 39,
+          "title": "Interval: 5× 3 menit cepat",
+          "distanceKm": 5.5,
+          "targetPace": "8:00",
+          "notes": "Bagian cepat ~6:50/km, jog 2 menit di antaranya. Total termasuk pemanasan & pendinginan."
+        },
+        {
+          "day": 42,
+          "title": "Long run",
+          "distanceKm": 10,
+          "targetPace": "8:20",
+          "notes": ""
+        },
+        {
+          "day": 44,
+          "title": "Easy run",
+          "distanceKm": 4,
+          "targetPace": "8:15",
+          "notes": "Minggu pemulihan."
+        },
+        {
+          "day": 46,
           "title": "Easy run + 4× strides",
           "distanceKm": 4,
+          "targetPace": "8:15",
+          "notes": ""
+        },
+        {
+          "day": 49,
+          "title": "Easy run",
+          "distanceKm": 5,
           "targetPace": "8:00",
-          "notes": "Strides 20 detik, jog 1 menit."
+          "notes": "Minggu pemulihan."
+        },
+        {
+          "day": 51,
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "7:50",
+          "notes": ""
+        },
+        {
+          "day": 53,
+          "title": "Tempo run",
+          "distanceKm": 5,
+          "targetPace": "7:20",
+          "notes": "1 km pemanasan, 3 km @ 7:20/km, 1 km pendinginan."
+        },
+        {
+          "day": 56,
+          "title": "10K goal run",
+          "distanceKm": 10,
+          "targetPace": "8:00",
+          "notes": "Mulai di 8:15/km, percepat bertahap di 3 km terakhir kalau kuat. Target selesai nyaman tanpa berhenti."
+        }
+      ]
+    },
+    {
+      "id": "easy-comeback-20261024",
+      "title": "Easy Comeback Routine",
+      "goal": "Program ringan 4 minggu untuk menjaga konsistensi lari 3× seminggu di jarak pendek (3–5 km), cocok kalau ingin jeda dari program intensif atau baru pulih dari kelelahan. Bisa dimulai kapan saja.",
+      "durationWeeks": 4,
+      "sessions": [
+        {
+          "day": 2,
+          "title": "Easy run",
+          "distanceKm": 3,
+          "targetPace": "8:30",
+          "notes": "Santai, nikmati lari."
+        },
+        {
+          "day": 4,
+          "title": "Easy run",
+          "distanceKm": 3,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 7,
+          "title": "Easy run",
+          "distanceKm": 4,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 9,
+          "title": "Easy run",
+          "distanceKm": 3,
+          "targetPace": "8:30",
+          "notes": ""
+        },
+        {
+          "day": 11,
+          "title": "Easy run + 4× strides",
+          "distanceKm": 3.5,
+          "targetPace": "8:30",
+          "notes": "Strides 20 detik, jalan 1 menit."
         },
         {
           "day": 14,
-          "title": "Easy long run",
-          "distanceKm": 5.5,
+          "title": "Easy run",
+          "distanceKm": 4.5,
           "targetPace": "8:30",
           "notes": ""
         },
@@ -297,7 +381,7 @@
           "notes": "Minggu pemulihan."
         },
         {
-          "day": 19,
+          "day": 18,
           "title": "Easy run",
           "distanceKm": 3,
           "targetPace": "8:15",
@@ -305,31 +389,31 @@
         },
         {
           "day": 21,
-          "title": "Easy long run",
-          "distanceKm": 4.5,
-          "targetPace": "8:30",
+          "title": "Easy run",
+          "distanceKm": 3.5,
+          "targetPace": "8:15",
           "notes": ""
         },
         {
           "day": 23,
           "title": "Easy run",
+          "distanceKm": 3.5,
+          "targetPace": "8:15",
+          "notes": ""
+        },
+        {
+          "day": 25,
+          "title": "Easy run + 4× strides",
           "distanceKm": 4,
           "targetPace": "8:15",
           "notes": ""
         },
         {
-          "day": 26,
-          "title": "Easy run + 4× strides",
-          "distanceKm": 4,
-          "targetPace": "8:00",
-          "notes": ""
-        },
-        {
           "day": 28,
-          "title": "Easy long run",
-          "distanceKm": 5.5,
-          "targetPace": "8:30",
-          "notes": "Penutup program — nikmati!"
+          "title": "Easy run",
+          "distanceKm": 5,
+          "targetPace": "8:15",
+          "notes": "Penutup program. Kalau terasa ringan, kamu siap naik ke program yang lebih menantang!"
         }
       ]
     }
