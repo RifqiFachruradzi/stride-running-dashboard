@@ -453,5 +453,12 @@
     "shortTermLoad": 20,
     "longTermLoad": 38,
     "loadRatio": 0.52
+  },
+  {
+    "date": "2026-10-29",
+    "comment": "Decreasing",
+    "shortTermLoad": 18,
+    "longTermLoad": 38,
+    "loadRatio": 0.47
   }
 ]
