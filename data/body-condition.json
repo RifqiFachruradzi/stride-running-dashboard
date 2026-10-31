@@ -341,5 +341,12 @@
     "sleepScore": null,
     "sleepDurationMinutes": null,
     "stressLevel": 27
+  },
+  {
+    "date": "2026-10-31",
+    "restingHeartRate": null,
+    "sleepScore": null,
+    "sleepDurationMinutes": null,
+    "stressLevel": 49
   }
 ]
