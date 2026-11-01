@@ -474,5 +474,12 @@
     "shortTermLoad": 27,
     "longTermLoad": 39,
     "loadRatio": 0.69
+  },
+  {
+    "date": "2026-11-01",
+    "comment": "Maintaining",
+    "shortTermLoad": 36,
+    "longTermLoad": 41,
+    "loadRatio": 0.87
   }
 ]
