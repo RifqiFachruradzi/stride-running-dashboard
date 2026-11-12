@@ -424,6 +424,13 @@
     "restingHeartRate": 54,
     "sleepScore": 93,
     "sleepDurationMinutes": 476,
-    "stressLevel": 21
+    "stressLevel": 24
+  },
+  {
+    "date": "2026-11-12",
+    "restingHeartRate": 54,
+    "sleepScore": 97,
+    "sleepDurationMinutes": 505,
+    "stressLevel": 25
   }
 ]
